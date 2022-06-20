@@ -9,7 +9,7 @@ resource "random_password" "fe_password" {
 resource "azurerm_virtual_machine" "weight_app" {
   count                 = var.machines
   location              = var.location
-  name                  = "frontend_${count.index}"
+  name                  = "frontServer${count.index}"
   network_interface_ids = [element(azurerm_network_interface.frontendNics.*.id, count.index)]
   resource_group_name = azurerm_resource_group.weight-app.name
   vm_size               = var.size

@@ -40,7 +40,7 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 resource "azurerm_network_interface" "frontendNics" {
   count               = var.machines
 # the following name needs to be dynamic:
-  name                = "internal"
+  name                = "frontserver${count.index}"
   location            = var.location
   resource_group_name  = azurerm_resource_group.weight-app.name
 #  virtual_network_name = azurerm_virtual_network.weight-app_network.name
@@ -48,7 +48,7 @@ resource "azurerm_network_interface" "frontendNics" {
   ip_configuration {
 ## {{dynamic variable connection}}
 
-    name                          = azurerm_public_ip.frontend_public_ip.id
+    name                          = azurerm_public_ip.frontendIP.id
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 

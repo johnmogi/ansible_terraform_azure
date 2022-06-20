@@ -29,3 +29,8 @@ variable size {
     type    = string
     default = "Standard_b1s"
 }
+
+variable  pool_name {
+  default = "webapp_nic"
+  description = "load balance flexible data"
+}

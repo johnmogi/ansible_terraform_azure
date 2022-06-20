@@ -1,6 +1,6 @@
 # Main public IP
-resource "azurerm_public_ip" "frontend_public_ip" {
-  name                = "weight_app_public_ip"
+resource "azurerm_public_ip" "frontendIP" {
+  name                = "public_ip"
   resource_group_name  = azurerm_resource_group.weight-app.name
   location            = var.location
   allocation_method   = "Static"
@@ -13,7 +13,6 @@ resource "azurerm_public_ip" "frontend_public_ip" {
 # Public network interface cards
 resource "azurerm_network_interface" "network_interface_app" {
   count               = var.machines
-#   name                = "${var.lb_backend_ap_ip_configuration_name}-${count.index + 1}"
   name                = "NC${count.index}"
   resource_group_name  = azurerm_resource_group.weight-app.name
   location            = var.location
@@ -22,9 +21,6 @@ resource "azurerm_network_interface" "network_interface_app" {
 
 ## dependency injection nics => azurerm_network_interface_application_gateway_backend_address_pool_association
   ip_configuration {
-    ## {{ nic_ids[0].id }}
-    # name                          = [element(azurerm_network_interface.network_interface_app.*.id, count.index)]
-    # name                          = azurerm_network_interface.frontendNics.nic_ids[count.index].id
     name                          = "webapp_${count.index}"
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
@@ -43,7 +39,7 @@ resource "azurerm_network_interface" "network_interface_app" {
 resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_connection" {
   count                   = var.machines
   backend_address_pool_id = azurerm_lb_backend_address_pool.lb_pool.id
-  ip_configuration_name   = "webapp_nic"
+  ip_configuration_name   = var.pool_name
   # network_interface_id    = [element(azurerm_network_interface.frontendNics[count.index].id, count.index)]
   network_interface_id    = azurerm_network_interface.frontendNics[count.index].id
 
