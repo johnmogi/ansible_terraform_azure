@@ -1,6 +1,11 @@
 Sela week 6 starts with a bang, trying to recover and upgrade
 ansible_terraform_azure
 
+how to change variables on enviroment?
+for instance var.machine 2 staging | 3 prod
+or size                   = "Standard_b2s"
+
+
 connect nsg to nic to vm
 
 load balancer no health probes

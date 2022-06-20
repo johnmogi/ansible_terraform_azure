@@ -43,10 +43,11 @@ resource "azurerm_network_interface" "frontend_nics" {
   name                = "internal"
   location            = var.location
   resource_group_name  = azurerm_resource_group.weight-app.name
-  virtual_network_name = azurerm_virtual_network.weight-app_network.name
+#  virtual_network_name = azurerm_virtual_network.weight-app_network.name
 
   ip_configuration {
 ## {{dynamic variable connection}}
+
     name                          = azurerm_public_ip.frontend_public_ip.id
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
