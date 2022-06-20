@@ -39,33 +39,36 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 # Provide each macine with a nic
 resource "azurerm_network_interface" "frontend_nics" {
   count               = var.machines
-  name                = "${var.lb_backend_ap_ip_configuration_name}-${count.index + 1}"
-  location            = azurerm_resource_group.weight_tracker_rg.location
-  resource_group_name = azurerm_resource_group.weight_tracker_rg.name
+# the following name needs to be dynamic:
+  name                = "internal"
+  location            = var.location
+  resource_group_name  = azurerm_resource_group.weight-app.name
+  virtual_network_name = azurerm_virtual_network.weight-app_network.name
 
   ip_configuration {
-    name                          = var.lb_backend_ap_ip_configuration_name
-    subnet_id                     = azurerm_subnet.app_subnet.id
+## {{dynamic variable connection}}
+    name                          = azurerm_public_ip.frontend_public_ip.id
+    subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 
   }
 
   depends_on = [
-    azurerm_resource_group.weight_tracker_rg,
-    azurerm_subnet.app_subnet
+    azurerm_resource_group.weight-app,
+    azurerm_subnet.frontend_subnet
   ]
 
 }
 
 # Availability Set
 resource "azurerm_availability_set" "weigght_app_avs" {
-  location                     = var.location
   name                         = "frontend_avs"
-  resource_group_name          = azurerm_resource_group.weight_tracker_rg.name
+  location                     = var.location
+  resource_group_name          = azurerm_resource_group.weight-app.name
   platform_fault_domain_count  = var.machines
   platform_update_domain_count = var.machines
   managed                      = true
 
-  depends_on          = [azurerm_resource_group.rg]
+  depends_on          = [azurerm_resource_group.weight-app]
 
 }
