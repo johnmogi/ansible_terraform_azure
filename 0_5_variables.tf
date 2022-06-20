@@ -22,7 +22,7 @@ variable prefix {
 
 variable machines {
     type = number
-    default = "3"
+    default = 2 
 }
 
 variable size {

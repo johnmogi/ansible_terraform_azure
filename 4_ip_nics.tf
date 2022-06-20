@@ -18,22 +18,14 @@ resource "azurerm_network_interface" "network_interface_app" {
   resource_group_name  = azurerm_resource_group.weight-app.name
   location            = var.location
 
-# Connect front end nics to backend pool
-resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_connection" {
-  count                   = var.machines
-  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_pool.id
-  ip_configuration_name   = var.lb_backend_ap_ip_configuration_name
-  network_interface_id    = azurerm_network_interface.frontend_nics.nic_ids[count.index].id
 
-  depends_on              = [ azurerm_lb_backend_address_pool.backend_add_pool, azurerm_lb.azurerm_lb ]
-}
 
 ## dependency injection nics => azurerm_network_interface_application_gateway_backend_address_pool_association
   ip_configuration {
     ## {{ nic_ids[0].id }}
     # name                          = [element(azurerm_network_interface.network_interface_app.*.id, count.index)]
-    # name                          = azurerm_network_interface.frontend_nics.nic_ids[count.index].id
-        name                          = "${var.vm_name}${count.index}"
+    # name                          = azurerm_network_interface.frontendNics.nic_ids[count.index].id
+    name                          = "webapp_${count.index}"
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 
@@ -45,6 +37,17 @@ resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_c
     azurerm_subnet.frontend_subnet
   ]
 
+}
+
+# Connect front end nics to backend pool
+resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_connection" {
+  count                   = var.machines
+  backend_address_pool_id = azurerm_lb_backend_address_pool.lb_pool.id
+  ip_configuration_name   = "webapp_nic"
+  # network_interface_id    = [element(azurerm_network_interface.frontendNics[count.index].id, count.index)]
+  network_interface_id    = azurerm_network_interface.frontendNics[count.index].id
+
+  depends_on              = [ azurerm_virtual_machine.weight_app,  azurerm_lb.azurerm_lb ]
 }
 
 # # Sysadmin IP

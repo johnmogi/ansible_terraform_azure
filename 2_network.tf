@@ -37,7 +37,7 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 }
 
 # Provide each macine with a nic
-resource "azurerm_network_interface" "frontend_nics" {
+resource "azurerm_network_interface" "frontendNics" {
   count               = var.machines
 # the following name needs to be dynamic:
   name                = "internal"

@@ -7,34 +7,37 @@ resource "random_password" "fe_password" {
 
 # Create Virtual Machines
 resource "azurerm_virtual_machine" "weight_app" {
-  count                 = var.machine
+  count                 = var.machines
   location              = var.location
   name                  = "frontend_${count.index}"
-  network_interface_ids = [element(azurerm_network_interface.nics.*.id, count.index)]
+  network_interface_ids = [element(azurerm_network_interface.frontendNics.*.id, count.index)]
   resource_group_name = azurerm_resource_group.weight-app.name
-  vm_size               = var.webapp_vm_type_b1s
+  vm_size               = var.size
 
   storage_os_disk {
-    create_option     = var.webapp_create_option
-    name              = "WebApp_${count.index + 1}-${var.vm_disk_name}"
-    caching           = var.webapp_disk_catch
-    managed_disk_type = var.managed_disk_type
+    name              = "weight_app_disk_${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
   }
 
   storage_image_reference {
-    publisher = var.publisher
-    offer     = var.offer
-    sku       = var.linux_sku
-    version   = var.os_version
+  publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts-gen2"
+    version   = "latest"
   }
 
   os_profile {
-    admin_username = var.admin_username
+    admin_username = "azureuser"
     admin_password = random_password.fe_password.result
-    computer_name  = "webapp${count.index}"
+    computer_name  = "webapp_${count.index}"
   }
 
   os_profile_linux_config {
     disable_password_authentication = false
+  }
+    tags = {
+    environment = "${terraform.workspace}"
   }
 }
