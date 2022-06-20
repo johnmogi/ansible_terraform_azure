@@ -31,7 +31,8 @@ resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_c
 ## dependency injection nics => azurerm_network_interface_application_gateway_backend_address_pool_association
   ip_configuration {
     ## {{ nic_ids[0].id }}
-    name                          = [element(azurerm_network_interface.network_interface_app.*.id, count.index)]
+    # name                          = [element(azurerm_network_interface.network_interface_app.*.id, count.index)]
+    name                          = azurerm_network_interface.frontend_nics.nic_ids[count.index].id
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 
