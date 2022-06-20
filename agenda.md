@@ -3,6 +3,8 @@ ansible_terraform_azure
 
 connect nsg to nic to vm
 
+load balancer no health probes
+
 # connect be nic to nsg
 
 resource "azurerm_network_interface_security_group_association" "be_nsg_assoc" {
