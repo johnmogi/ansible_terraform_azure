@@ -37,10 +37,12 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 }
 
 # Provide each macine with a nic
-resource "azurerm_network_interface" "frontendNics" {
+resource "azurerm_network_interface" "nics" {
   count               = var.machines
 # the following name needs to be dynamic:
-  name                = "frontserver${count.index}"
+  # name                = "frontserver${count.index}"
+  name                          = "${var.name_app_for_ip}_${count.index}"
+
   location            = var.location
   resource_group_name  = azurerm_resource_group.weight-app.name
 #  virtual_network_name = azurerm_virtual_network.weight-app_network.name
@@ -48,7 +50,7 @@ resource "azurerm_network_interface" "frontendNics" {
   ip_configuration {
 ## {{dynamic variable connection}}
 
-    name                          = azurerm_public_ip.frontendIP.id
+    name                          = azurerm_public_ip.ip.id
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 

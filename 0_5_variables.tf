@@ -34,3 +34,7 @@ variable  pool_name {
   default = "webapp_nic"
   description = "load balance flexible data"
 }
+variable "name_app_for_ip" {
+  description ="network interface for load balancer pool"
+  default = "addressPool"
+}

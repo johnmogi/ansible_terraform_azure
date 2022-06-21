@@ -6,8 +6,8 @@ resource "azurerm_lb" "azurerm_lb" {
 
 # Ip
   frontend_ip_configuration {
-    name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.frontendIP.id
+    name                 = "mip"
+    public_ip_address_id = azurerm_public_ip.ip.id
   }
   sku = "Standard"
 }
