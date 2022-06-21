@@ -1,14 +1,25 @@
-
+# maginc numbers for stging and production:
+variable machines {
+    type = number
+    default = 3 
+    # staging = 2
+}
+variable size {
+    type    = string
+    default = "Standard_b1s"
+    # staging = "Standard_b1s"
+}
 variable "name"{
   default = "weight_app"
-  
 }
 variable "group" {
-  default = "weight_app_rg"
+  default = "weight_app"
+}
+variable "rgn"{
+  default =  "azurerm_resource_group.weight-app.name"
 }
 variable "location"{
-  default = "East Us"
-  
+  default = "East Us" 
 }
 variable "tags" {
   default = {
@@ -20,10 +31,7 @@ variable prefix {
     default = "weight_app" 
 }
 
-variable machines {
-    type = number
-    default = 2 
-}
+
 variable sysadmin_ip{
   type    = string
   default= "sysadmin_ip"
@@ -39,10 +47,7 @@ variable command_nic_ip_configuration_name {
   default = "sysadmin_ip_con"
 }
 
-variable size {
-    type    = string
-    default = "Standard_b1s"
-}
+
 
 # one connection to pool them all
 variable  pool_name {

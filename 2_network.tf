@@ -38,7 +38,8 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 
 # Provide each macine with a nic
 resource "azurerm_network_interface" "nics" {
-  count               = 2
+  count               = var.machines
+
   name                = "${var.pool_name}-${count.index}"
   location            = var.location
   resource_group_name  = azurerm_resource_group.weight-app.name
