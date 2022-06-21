@@ -1,6 +1,6 @@
 # Virtual Network
 resource "azurerm_virtual_network" "weight_app_network" {
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["10.0.0.0/16"] 
   location            = var.location
   name                = "${var.prefix}_network"
   resource_group_name = azurerm_resource_group.weight-app.name
@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "weight_app_network" {
 
 # Private subnet
 resource "azurerm_subnet" "backend_subnet" {
-  address_prefixes     = ["10.0.0.0/28"] 
+  address_prefixes     = ["10.0.0.0/26"] 
   name                 = "backendSubnet"
   resource_group_name  = azurerm_resource_group.weight-app.name
   virtual_network_name = azurerm_virtual_network.weight_app_network.name
@@ -18,7 +18,7 @@ resource "azurerm_subnet" "backend_subnet" {
 
 # Frontend subnet
 resource "azurerm_subnet" "frontend_subnet" {
-  address_prefixes     = ["10.0.10.0/28"]
+  address_prefixes     = ["10.0.20.0/26"]
   name                 = "frontendSubnet"
   resource_group_name  = azurerm_resource_group.weight-app.name
   virtual_network_name = azurerm_virtual_network.weight_app_network.name
@@ -28,7 +28,7 @@ resource "azurerm_subnet" "frontend_subnet" {
 
 # Sysadmin worker
 resource "azurerm_subnet" "sysadmin_subnet" {
-  address_prefixes     = ["10.0.20.0/28"] 
+  address_prefixes     = ["10.0.30.0/26"] 
   name                 = "sysadminSubnet"
   resource_group_name  = azurerm_resource_group.weight-app.name
   virtual_network_name = azurerm_virtual_network.weight_app_network.name
@@ -38,11 +38,8 @@ resource "azurerm_subnet" "sysadmin_subnet" {
 
 # Provide each macine with a nic
 resource "azurerm_network_interface" "nics" {
-  count               = var.machines
-# the following name needs to be dynamic:
-  # name                = "frontserver${count.index}"
-  name                          = "${var.name_app_for_ip}_${count.index}"
-
+  count               = 2
+  name                = "${var.pool_name}-${count.index}"
   location            = var.location
   resource_group_name  = azurerm_resource_group.weight-app.name
 #  virtual_network_name = azurerm_virtual_network.weight-app_network.name
@@ -50,7 +47,7 @@ resource "azurerm_network_interface" "nics" {
   ip_configuration {
 ## {{dynamic variable connection}}
 
-    name                          = azurerm_public_ip.ip.id
+    name                          = "${var.pool_name}-${count.index}"
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
 
@@ -60,9 +57,28 @@ resource "azurerm_network_interface" "nics" {
     azurerm_resource_group.weight-app,
     azurerm_subnet.frontend_subnet
   ]
-
 }
 
+# Sysadmin nic 
+resource "azurerm_network_interface" "sys_nic" {
+  location            = var.location
+  name                = "Linux_${var.command_vm_name}-NIC"
+  resource_group_name  = azurerm_resource_group.weight-app.name
+
+  ip_configuration {
+    name                          = "Linux_${var.command_vm_name}-NIC"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.sysadmin_ip.id
+    subnet_id                     = azurerm_subnet.sysadmin_subnet.id
+
+  }
+
+  depends_on = [
+    azurerm_resource_group.weight-app,
+    azurerm_subnet.sysadmin_subnet
+  ]
+
+}
 # Availability Set
 resource "azurerm_availability_set" "weigght_app_avs" {
   name                         = "frontend_avs"

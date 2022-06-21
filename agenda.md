@@ -1,4 +1,11 @@
 Sela week 6 starts with a bang, trying to recover and upgrade
+
+
+fix names, variables clean up tf code
+
+
+
+
 ansible_terraform_azure
 
 how to change variables on enviroment?

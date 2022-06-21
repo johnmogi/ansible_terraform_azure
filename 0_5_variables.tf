@@ -24,17 +24,28 @@ variable machines {
     type = number
     default = 2 
 }
+variable sysadmin_ip{
+  type    = string
+  default= "sysadmin_ip"
+
+}
+variable "command_vm_name" {
+  description = "Name of the Terminal VM"
+  default     = "CMD"
+
+}
+variable command_nic_ip_configuration_name {
+  description = "connection to vm sysadmin"
+  default = "sysadmin_ip_con"
+}
 
 variable size {
     type    = string
     default = "Standard_b1s"
 }
 
+# one connection to pool them all
 variable  pool_name {
-  default = "webapp_nic"
+  default = "webapp_nic" // webapp_nic0
   description = "load balance flexible data"
-}
-variable "name_app_for_ip" {
-  description ="network interface for load balancer pool"
-  default = "addressPool"
 }
