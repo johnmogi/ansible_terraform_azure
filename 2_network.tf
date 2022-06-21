@@ -66,7 +66,7 @@ resource "azurerm_network_interface" "sys_nic" {
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {
-    name                          = "Linux_${var.command_vm_name}-NIC"
+    name                          = var.command_nic_ip_configuration_name
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.sysadmin_ip.id
     subnet_id                     = azurerm_subnet.sysadmin_subnet.id

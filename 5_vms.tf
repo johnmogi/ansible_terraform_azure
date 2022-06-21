@@ -45,7 +45,9 @@ resource "azurerm_virtual_machine" "weight_app" {
 }
 # azurerm_linux_virtual_machine vs azurerm_virtual_machine - why? testing...
 resource "azurerm_linux_virtual_machine" "sysadmin_vm" {
-  name                            = "Linux_${var.command_vm_name}-PiP"
+#   name                            = "Linux_${var.command_vm_name}-PiP"
+  name                            = "Linux_${var.command_vm_name}-NIC"
+
   location                        = var.location
   computer_name                   = "sysadminVmWorker"
   admin_username      = "adminuser"

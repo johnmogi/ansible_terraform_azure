@@ -45,7 +45,8 @@ resource "azurerm_network_interface" "network_interface_app" {
 # sysadmin interface card
 resource "azurerm_network_interface" "sysadmin_nic" {
   location            = var.location
-  name                = "sysadmin_nic"
+#  name                = "sysadmin_nic"
+  name                = "Linux_${var.command_vm_name}-NIC"
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {

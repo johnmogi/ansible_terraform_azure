@@ -1,8 +1,22 @@
-Sela week 6 starts with a bang, trying to recover and upgrade
+## Sela week 6 starts with a bang, trying to recover and upgrade
+
+check for connectivity
+10.0.0.0/16 - network
+10.0.20.0/26 - sysadmin
+10.0.20.4 - mvm1
+10.0.20.5 - mvm2
+pub ip : 20.228.141.252
 
 
+1, went into ~./ssh, got connected to sysadmin.
+
+the load balancer - does it work
+how it works -rules
+
+postgresql - build
+
+NSG- put in place and strenghten security
 fix names, variables clean up tf code
-
 
 
 

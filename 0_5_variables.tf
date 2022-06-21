@@ -46,6 +46,6 @@ variable size {
 
 # one connection to pool them all
 variable  pool_name {
-  default = "webapp_nic" // webapp_nic0
+  default = "webapp_nic" 
   description = "load balance flexible data"
 }
