@@ -1,7 +1,14 @@
-# maginc numbers for stging and production:
+# hidden data managed by last pass: azure sela week6
+variable TF_VAR_admin_username{default="" }
+variable TF_VAR_admin_password{default="" }
+variable TF_VAR_db_username{default="" }
+variable TF_VAR_db_password{default="" }
+
+
+# magic numbers for staging and production:
 variable machines {
     type = number
-    default = 3 
+    default = 2
     # staging = 2
 }
 variable size {
@@ -37,17 +44,13 @@ variable sysadmin_ip{
   default= "sysadmin_ip"
 
 }
-variable "command_vm_name" {
-  description = "Name of the Terminal VM"
-  default     = "CMD"
-
+variable "sysadmin_machine" {
+  default     = "pass"
 }
 variable command_nic_ip_configuration_name {
   description = "connection to vm sysadmin"
   default = "sysadmin_ip_con"
 }
-
-
 
 # one connection to pool them all
 variable  pool_name {

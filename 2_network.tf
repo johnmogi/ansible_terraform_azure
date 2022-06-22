@@ -47,7 +47,6 @@ resource "azurerm_network_interface" "nics" {
 
   ip_configuration {
 ## {{dynamic variable connection}}
-
     name                          = "${var.pool_name}-${count.index}"
     subnet_id                     = azurerm_subnet.frontend_subnet.id
     private_ip_address_allocation = "Dynamic"
@@ -60,10 +59,10 @@ resource "azurerm_network_interface" "nics" {
   ]
 }
 
-# Sysadmin nic 
+# Sysadmin network_interface 
 resource "azurerm_network_interface" "sys_nic" {
   location            = var.location
-  name                = "Linux_${var.command_vm_name}-NIC"
+  name                = "Linux_${var.sysadmin_machine}-NIC"
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {
@@ -80,7 +79,7 @@ resource "azurerm_network_interface" "sys_nic" {
   ]
 
 }
-# Availability Set
+# availability_set
 resource "azurerm_availability_set" "weigght_app_avs" {
   name                         = "frontend_avs"
   location                     = var.location

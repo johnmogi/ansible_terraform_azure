@@ -46,7 +46,7 @@ resource "azurerm_network_interface" "network_interface_app" {
 resource "azurerm_network_interface" "sysadmin_nic" {
   location            = var.location
 #  name                = "sysadmin_nic"
-  name                = "Linux_${var.command_vm_name}-NIC"
+  name                = "Linux_${var.sysadmin_machine}-NIC"
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {
@@ -63,7 +63,6 @@ resource "azurerm_network_interface" "sysadmin_nic" {
   ]
 
 }
-
 
 # Connect front end nics to backend pool ip and machine must match
 resource "azurerm_network_interface_backend_address_pool_association" "fe_nics_connection" {
