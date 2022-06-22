@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "sysadmin_ip" {
 # Public network interface cards
 resource "azurerm_network_interface" "network_interface_app" {
   count               = var.machines
-  name                = "NC${count.index}"
+  name                = "webapp_${count.index}"
   resource_group_name  = azurerm_resource_group.weight-app.name
   location            = var.location
 
@@ -46,7 +46,7 @@ resource "azurerm_network_interface" "network_interface_app" {
 resource "azurerm_network_interface" "sysadmin_nic" {
   location            = var.location
 #  name                = "sysadmin_nic"
-  name                = "Linux_${var.sysadmin_machine}-NIC"
+  name                = "sysadmin_${var.sysadmin_machine}-nic"
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {

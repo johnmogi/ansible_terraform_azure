@@ -13,6 +13,14 @@ resource "azurerm_subnet" "backend_subnet" {
   resource_group_name  = azurerm_resource_group.weight-app.name
   virtual_network_name = azurerm_virtual_network.weight_app_network.name
 
+delegation {
+    name = "dbSubConection"
+    service_delegation {
+      name    = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+    }
+  }
+
   depends_on = [azurerm_resource_group.weight-app]
 }
 
@@ -62,7 +70,7 @@ resource "azurerm_network_interface" "nics" {
 # Sysadmin network_interface 
 resource "azurerm_network_interface" "sys_nic" {
   location            = var.location
-  name                = "Linux_${var.sysadmin_machine}-NIC"
+  name                = "sysadmin_${var.sysadmin_machine}-nic"
   resource_group_name  = azurerm_resource_group.weight-app.name
 
   ip_configuration {

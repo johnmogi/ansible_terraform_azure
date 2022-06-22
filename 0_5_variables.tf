@@ -4,7 +4,6 @@ variable TF_VAR_admin_password{default="" }
 variable TF_VAR_db_username{default="" }
 variable TF_VAR_db_password{default="" }
 
-
 # magic numbers for staging and production:
 variable machines {
     type = number
@@ -38,14 +37,13 @@ variable prefix {
     default = "weight_app" 
 }
 
-
 variable sysadmin_ip{
   type    = string
   default= "sysadmin_ip"
 
 }
 variable "sysadmin_machine" {
-  default     = "pass"
+  default     = "vm"
 }
 variable command_nic_ip_configuration_name {
   description = "connection to vm sysadmin"
