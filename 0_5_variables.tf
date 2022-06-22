@@ -19,7 +19,7 @@ variable "name"{
   default = "weight_app"
 }
 variable "group" {
-  default = "weight_app"
+  default = "weight-app"
 }
 variable "rgn"{
   default =  "azurerm_resource_group.weight-app.name"

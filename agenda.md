@@ -2,8 +2,15 @@
 
 #status :
 
+backend connection to subnet
+
+
+build modules, pretty names
+
 missing bits: modules for vms
 make another okta for staging
+NSG
+
 
 - 2 nics are orphaned on the frontend - solve - low priority
 <!-- - connect to machines using ansible, provide a ping and a play. -->
