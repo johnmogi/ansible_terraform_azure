@@ -14,11 +14,11 @@ resource "azurerm_resource_group" "weight-app" {
 
 
 # Creates the postgreSQL server (managed database)
-module "postgres" {
-  source          = "./modules/postgres"
-  rg_name         = azurerm_resource_group.weight-app.name
-  server_location = var.location
-  db_subnet       = azurerm_subnet.backend_subnet
-  vnet            = azurerm_virtual_network.weight_app_network
-  pg_password     = "5pSi8DJ7yk8f"
-}
+# module "postgres" {
+#   source          = "./modules/postgres"
+#   rg_name         = azurerm_resource_group.weight-app.name
+#   location = var.location
+#   db_subnet       = azurerm_subnet.backend_subnet
+#   vnet            = azurerm_virtual_network.weight_app_network
+#   pg_password     = "5pSi8DJ7yk8f"
+# }

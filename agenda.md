@@ -1,5 +1,8 @@
 ## Sela week 6 starts with a bang, trying to recover and upgrade
 
+1 day to fix:
+ansible - make stable.
+tf code base - document postgres module
 #status :
 
 backend connection to subnet
@@ -12,7 +15,8 @@ make another okta for staging
 NSG
 
 
-- 2 nics are orphaned on the frontend - solve - low priority
+- 2 nics are orphaned on the frontend - solve - low priority - module convertion
+
 <!-- - connect to machines using ansible, provide a ping and a play. -->
 
 

@@ -14,7 +14,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "private_dns_zone_vnl" 
 resource "azurerm_postgresql_flexible_server" "postgres_server" {
   name                   = "postgres-server-db-flexible"
   resource_group_name    = var.rg_name
-  location               = var.server_location
+  location               = var.location
   version                = "12"
   delegated_subnet_id    = var.db_subnet.id
   private_dns_zone_id    = azurerm_private_dns_zone.private_dns_zone.id

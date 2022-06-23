@@ -1,4 +1,5 @@
 # Create Virtual Machines
+
 resource "azurerm_virtual_machine" "weight_app" {
   count                 = var.machines
   location              = var.location
