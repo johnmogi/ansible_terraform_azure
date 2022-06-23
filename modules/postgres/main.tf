@@ -12,14 +12,14 @@ resource "azurerm_private_dns_zone_virtual_network_link" "private_dns_zone_vnl" 
 
 # Creates postgresql flexible server
 resource "azurerm_postgresql_flexible_server" "postgres_server" {
-  name                   = "${var.rg_name}-db-flexible"
+  name                   = "${var.rg_name}postgrsql"
   resource_group_name    = var.rg_name
-  location               = var.server_location
+  location               = var.location
   version                = "12"
-  delegated_subnet_id    = var.db_subnet
+  delegated_subnet_id    = var.bacjendSubnet
   private_dns_zone_id    = azurerm_private_dns_zone.private_dns_zone.id
-  administrator_login    = var.pg_user
-  administrator_password = var.pg_password
+  administrator_login    = var.pgUsername
+  administrator_password = var.pgPassword
   zone                   = "1"
 
   storage_mb = 32768
@@ -30,7 +30,7 @@ resource "azurerm_postgresql_flexible_server" "postgres_server" {
 }
 
 # Configuring SSL
-resource "azurerm_postgresql_flexible_server_configuration" "db-config-no-ssl" {
+resource "azurerm_postgresql_flexible_server_configuration" "dbConfig" {
   name      = "require_secure_transport"
   server_id = azurerm_postgresql_flexible_server.postgres_server.id
   value     = "off"

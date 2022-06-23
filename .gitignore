@@ -2,6 +2,8 @@
 .secret
 secret*
 terraform.tfvars
+production.tfvars
+staging.tfvars
 .tfvars
 #direnv files
 .envrc

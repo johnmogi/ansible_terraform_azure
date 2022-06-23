@@ -20,28 +20,29 @@ resource "azurerm_public_ip" "sysadmin_ip" {
   depends_on = [azurerm_resource_group.weight-app]
 }
 
-# Public network interface for the app
-resource "azurerm_network_interface" "network_interface_app" {
-  count               = "${var.TF_VAR_machines}"
-  name                = "webapp_${count.index}"
-  resource_group_name  = azurerm_resource_group.weight-app.name
-  location            = var.location
+# # Public network interface for the app
+# resource "azurerm_network_interface" "network_interface_app" {
+#   count               = "${var.TF_VAR_machines}"
+#   name                = "webapp_${count.index}"
+#   resource_group_name  = azurerm_resource_group.weight-app.name
+#   location            = var.location
 
-## "hot" connection to public IP
-  ip_configuration {
-    name                          = "webapp_${count.index}"
-    subnet_id                     = azurerm_subnet.frontend_subnet.id
-    private_ip_address_allocation = "Dynamic"
+# ## "hot" connection to public IP
+#   ip_configuration {
+#     name                          = "webapp_${count.index}"
+#     subnet_id                     = azurerm_subnet.frontend_subnet.id
+#     private_ip_address_allocation = "Dynamic"
 
-  }
+#   }
 
-# Making sure resource group and subnet exists prior to connection
-  depends_on = [
-    azurerm_resource_group.weight-app,
-    azurerm_subnet.frontend_subnet
-  ]
+# # Making sure resource group and subnet exists prior to connection
+#   depends_on = [
+#     azurerm_resource_group.weight-app,
+#     azurerm_subnet.frontend_subnet
+#   ]
 
-}
+# }
+
 # sysadmin network interface for the app
 resource "azurerm_network_interface" "sysadmin_nic" {
   location            = var.location

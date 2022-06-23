@@ -47,7 +47,7 @@ resource "azurerm_subnet_network_security_group_association" "frontend_subnet" {
 }
 # connecting fe_vms [NIC] to fe nsg
 resource "azurerm_network_interface_security_group_association" "nics_nsg" {
-  count                     = 2
+  count                     = "${var.TF_VAR_machines}"
   network_interface_id      = azurerm_network_interface.nics[count.index].id
   network_security_group_id = azurerm_network_security_group.frontend_nsg.id
 }
