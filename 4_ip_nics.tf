@@ -20,14 +20,14 @@ resource "azurerm_public_ip" "sysadmin_ip" {
   depends_on = [azurerm_resource_group.weight-app]
 }
 
-# Public network interface cards
+# Public network interface for the app
 resource "azurerm_network_interface" "network_interface_app" {
   count               = var.machines
   name                = "webapp_${count.index}"
   resource_group_name  = azurerm_resource_group.weight-app.name
   location            = var.location
 
-## dependency injection nics => azurerm_network_interface_application_gateway_backend_address_pool_association
+## "hot" connection to public IP
   ip_configuration {
     name                          = "webapp_${count.index}"
     subnet_id                     = azurerm_subnet.frontend_subnet.id
@@ -35,14 +35,14 @@ resource "azurerm_network_interface" "network_interface_app" {
 
   }
 
-# Make sure resource group and subnet exists prior to connection
+# Making sure resource group and subnet exists prior to connection
   depends_on = [
     azurerm_resource_group.weight-app,
     azurerm_subnet.frontend_subnet
   ]
 
 }
-# sysadmin interface card
+# sysadmin network interface for the app
 resource "azurerm_network_interface" "sysadmin_nic" {
   location            = var.location
 #  name                = "sysadmin_nic"
@@ -56,7 +56,7 @@ resource "azurerm_network_interface" "sysadmin_nic" {
     subnet_id                     = azurerm_subnet.sysadmin_subnet.id
 
   }
-
+ # Making sure resource group and subnet exists prior to connection
   depends_on = [
     azurerm_resource_group.weight-app,
     azurerm_subnet.sysadmin_subnet
