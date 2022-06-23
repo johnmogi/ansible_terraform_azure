@@ -1,40 +1,18 @@
 # Create Virtual Machines
-
-resource "azurerm_virtual_machine" "weight_app" {
-  count                 = var.machines
-  location              = var.location
-  name                  = "frontServer-${count.index}"
-  network_interface_ids = [element(azurerm_network_interface.nics.*.id, count.index)]
-  resource_group_name = azurerm_resource_group.weight-app.name
-  vm_size               = var.size
-
-  storage_os_disk {
-    name              = "weight_app_disk_${count.index}"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+  module "vm_front"{
+  source = "./modules/frontend"
+  count=var.machines
+  pass_count=var.machines
+  location       = var.location
+  rg_name = azurerm_resource_group.weight_app.name
+  admin_username = "${var.TF_VAR_admin_username}"
+  admin_password = "${var.TF_VAR_admin_password}"
+  vm_front = "frontendMachine${count.index}"
+  size=var.size
+  nic_fe_ids = [element(azurerm_network_interface.nics.*.id, count.index)]
+  
   }
 
-  storage_image_reference {
-  publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
-  }
-
-  os_profile {
-    admin_username = "${var.TF_VAR_admin_username}"
-    admin_password = "${var.TF_VAR_admin_password}"
-    computer_name  = "webapp${count.index}"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-    tags = {
-    environment = "${terraform.workspace}"
-  }
-}
 # azurerm_linux_virtual_machine vs azurerm_virtual_machine - why? testing...
 resource "azurerm_linux_virtual_machine" "sysadmin_vm" {
   name                            = "sysadmin_${var.sysadmin_machine}"

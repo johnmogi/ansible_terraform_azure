@@ -1,12 +1,14 @@
-1. db connection to nic - rebuild
-2. clean 2 orphans
-3. nsg review
-4. convert parts into modules - (coach)
-5. password maintnance with blob
-6. blob access strengh
-7. if statement for workspace change
+0. ansible readme file
+1. db connection to nic- rebuild
+2. refractor vm into modules - a must
+3. clean 2 orphans [!]
+4. nsg review [!]
+5. convert parts into modules - (coach)
+6. password maintnance with blob
+7. blob access strengh
+8. if statement for workspace change
 
-backend subnet needs to be connected to nic
+backend subnet needs to be connected to nic -V ?
 
 nic needs to be connected to db
 
