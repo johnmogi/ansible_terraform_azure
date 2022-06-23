@@ -1,14 +1,14 @@
 # Create Virtual Machines
   module "vm_front"{
   source = "./modules/frontend"
-  count=var.machines
-  pass_count=var.machines
+  count="${var.TF_VAR_machines}"
   location       = var.location
-  rg_name = azurerm_resource_group.weight_app.name
+  size="${var.TF_VAR_size}"
+  rg_name = "${local.name}-${var.group}"
   admin_username = "${var.TF_VAR_admin_username}"
   admin_password = "${var.TF_VAR_admin_password}"
   vm_front = "frontendMachine${count.index}"
-  size=var.size
+  pass_count="${var.TF_VAR_machines}"
   nic_fe_ids = [element(azurerm_network_interface.nics.*.id, count.index)]
   
   }

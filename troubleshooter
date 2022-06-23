@@ -1,6 +1,6 @@
 0. ansible readme file
 1. db connection to nic- rebuild
-2. refractor vm into modules - a must
+2. refractor vm into modules - a must -V
 3. clean 2 orphans [!]
 4. nsg review [!]
 5. convert parts into modules - (coach)

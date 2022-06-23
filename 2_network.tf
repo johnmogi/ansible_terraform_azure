@@ -44,28 +44,28 @@ resource "azurerm_subnet" "sysadmin_subnet" {
   depends_on =  [azurerm_resource_group.weight-app]
 }
 
-# Provide each macine with a nic
-resource "azurerm_network_interface" "nics" {
-  count               = var.machines
+# # Provide each macine with a nic
+# resource "azurerm_network_interface" "nics" {
+#   count               = "${var.TF_VAR_machines}"
 
-  name                = "${var.pool_name}-${count.index}"
-  location            = var.location
-  resource_group_name  = azurerm_resource_group.weight-app.name
-#  virtual_network_name = azurerm_virtual_network.weight-app_network.name
+#   name                = "${var.pool_name}-${count.index}"
+#   location            = var.location
+#   resource_group_name  = azurerm_resource_group.weight-app.name
+# #  virtual_network_name = azurerm_virtual_network.weight-app_network.name
 
-  ip_configuration {
-## {{dynamic variable connection}}
-    name                          = "${var.pool_name}-${count.index}"
-    subnet_id                     = azurerm_subnet.frontend_subnet.id
-    private_ip_address_allocation = "Dynamic"
+#   ip_configuration {
+# ## {{dynamic variable connection}}
+#     name                          = "${var.pool_name}-${count.index}"
+#     subnet_id                     = azurerm_subnet.frontend_subnet.id
+#     private_ip_address_allocation = "Dynamic"
 
-  }
+#   }
 
-  depends_on = [
-    azurerm_resource_group.weight-app,
-    azurerm_subnet.frontend_subnet
-  ]
-}
+#   depends_on = [
+#     azurerm_resource_group.weight-app,
+#     azurerm_subnet.frontend_subnet
+#   ]
+# }
 
 # Sysadmin network_interface 
 resource "azurerm_network_interface" "sys_nic" {
@@ -87,15 +87,15 @@ resource "azurerm_network_interface" "sys_nic" {
   ]
 
 }
-# availability_set
-resource "azurerm_availability_set" "weigght_app_avs" {
-  name                         = "frontend_avs"
-  location                     = var.location
-  resource_group_name          = azurerm_resource_group.weight-app.name
-  platform_fault_domain_count  = var.machines
-  platform_update_domain_count = var.machines
-  managed                      = true
+# # availability_set
+# resource "azurerm_availability_set" "weight_app_avs" {
+#   name                         = "frontend_avs"
+#   location                     = var.location
+#   resource_group_name          = azurerm_resource_group.weight-app.name
+#   platform_fault_domain_count  = "${var.TF_VAR_machines}"
+#   platform_update_domain_count = "${var.TF_VAR_machines}"
+#   managed                      = true
 
-  depends_on          = [azurerm_resource_group.weight-app]
+#   depends_on          = [azurerm_resource_group.weight-app]
 
-}
+# }

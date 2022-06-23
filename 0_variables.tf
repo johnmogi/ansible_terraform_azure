@@ -3,18 +3,20 @@ variable TF_VAR_admin_username{default="" }
 variable TF_VAR_admin_password{default="" }
 variable TF_VAR_db_username{default="" }
 variable TF_VAR_db_password{default="" }
+variable TF_VAR_machines{default="" }
+variable TF_VAR_size{default="" }
 
 # magic numbers for staging and production:
-variable machines {
-    type = number
-    default = 2
-    # staging = 2
-}
-variable size {
-    type    = string
-    default = "Standard_b1s"
-    # staging = "Standard_b1s"
-}
+# variable machines {
+#     type = number
+#     default = 2
+#     # staging = 2
+# }
+ variable size {
+     type    = string
+     default = "Standard_b1s"
+#     # staging = "Standard_b1s"
+ }
 variable "name"{
   default = "weight_app"
 }
@@ -22,6 +24,11 @@ variable "group" {
   default = "weight-app"
 }
 variable "rgn"{
+  type    = string
+  default =  "azurerm_resource_group.weight-app.name"
+}
+variable "rg_name"{
+  type    = string
   default =  "azurerm_resource_group.weight-app.name"
 }
 variable "location"{

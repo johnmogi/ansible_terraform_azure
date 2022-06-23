@@ -3,9 +3,9 @@ resource "azurerm_linux_virtual_machine" "frontendServer" {
 
   name                = var.vm_front
   location            = var.location
-  resource_group_name = var.rg_name
   disable_password_authentication = false
-  depends_on = [var.vm_back]
+#   depends_on = [var.vm_back]
+  resource_group_name = var.rg_name
   size                  = var.size
   admin_username        = var.admin_username
   admin_password        = var.admin_password
