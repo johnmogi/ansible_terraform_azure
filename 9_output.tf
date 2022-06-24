@@ -3,5 +3,5 @@ output "admin_password" {
     sensitive = true
 }
 output "app_public_ip" {
-  value = azurerm_public_ip.ip_address
+  value = azurerm_public_ip.ip
 }

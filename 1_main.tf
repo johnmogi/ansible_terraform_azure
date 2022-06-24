@@ -10,4 +10,3 @@ resource "azurerm_resource_group" "weight-app" {
   name     =  "${local.name}-${var.group}"
   location = "East Us"
 }
-
