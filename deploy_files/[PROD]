@@ -1,0 +1,7 @@
+[PROD]
+prodvm1 ansible_host=10.0.20.4 ansible_port=22 ansible_user=adminuser ansible_password=Y6nGLfR7Dw9m
+prodvm2 ansible_host=10.0.20.5 ansible_port=22 ansible_user=adminuser ansible_password=Y6nGLfR7Dw9m
+prodvm3 ansible_host=10.0.20.6 ansible_port=22 ansible_user=adminuser ansible_password=Y6nGLfR7Dw9m
+[STAG]
+stagvm1 ansible_host=10.0.20.4 ansible_port=22 ansible_user=adminuser ansible_password=Y6nGLfR7Dw9m
+stagvm1 ansible_host=10.0.20.5 ansible_port=22 ansible_user=adminuser ansible_password=Y6nGLfR7Dw9m
