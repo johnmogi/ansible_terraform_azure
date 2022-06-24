@@ -31,6 +31,7 @@ TF_VAR_machines=3 | TF_VAR_machines= 2
 once begun do az login and then do the following:
 transfer the following files to the terraform providers.tf
 
+<pre>
 terraform {
 backend "azurerm" {
 resource_group_name = ""
@@ -41,6 +42,7 @@ access_key = ""
 }
 }
 
+
 provider "azurerm" {
 features {}
 subscription_id = ""
@@ -48,6 +50,8 @@ client_id = ""
 client_secret = ""
 tenant_id = ""
 }
+
+</pre>
 
 then to run the terraform plan command to each it's own enviroment:
 
