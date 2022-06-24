@@ -57,20 +57,26 @@
 - hosts: all
   become: true
   tasks:
-    - name: spawn app
-      shell: pm2 start src/index.js
-      args:
-      chdir:  /home/adminuser/weightapp/
 
-    - name: saving the state of pm2
-      shell: pm2 save
-      args:
-      chdir:  /home/adminuser/weightapp/
+- name: when pm2 fails, try bash
+    ansible.builtin.copy:
+      src: /home/adminuser/run.sh
+      dest: /home/adminuser/weightapp/run.sh
+      mode: '0755'
+    # - name: spawn app
+    #   shell: pm2 start src/index.js
+    #   args:
+    #   chdir:  /home/adminuser/weightapp/
 
-    - name: export pm2 path
-      shell: pm2 startup && sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u adminuser --hp /home/adminuser
-      args:
-      chdir:  /home/adminuser/weightapp/
+    # - name: saving the state of pm2
+    #   shell: pm2 save
+    #   args:
+    #   chdir:  /home/adminuser/weightapp/
+
+    # - name: export pm2 path
+    #   shell: pm2 startup && sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u adminuser --hp /home/adminuser
+    #   args:
+    #   chdir:  /home/adminuser/weightapp/
 
     - name: restart
       become: yes
