@@ -2,6 +2,21 @@
 
 Sela week 6 Terraform ansible
 
+how to change variables on enviroment?
+for instance var.machine 2 staging | 3 prod
+or size = "Standard_b2s"
+simply change the variable in the terraform file:
+
+terraform workspace select staging
+terraform workspace select production
+
+load balancer + health probes
+
+output:
+export password and user
+
+take care that staging is smaller then production as in vm b1s + 2 vm's on stage
+
 load balance public ip:
 prod public ip: 20.124.177.159
 frontend subnets : 10.0.20.4 | 10.0.20.5 | 10.0.20.6
