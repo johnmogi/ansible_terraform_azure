@@ -42,18 +42,6 @@ resource "azurerm_lb_rule" "web" {
 
 }
 
-# lb_nat_rule
-resource "azurerm_lb_nat_rule" "nat_rule_ssh" {
-  name                           = "SSH"
-  resource_group_name  = azurerm_resource_group.weight-app.name
-  backend_port                   = 22
-  frontend_ip_configuration_name = "mip"
-  frontend_port                  = 22
-  loadbalancer_id                = azurerm_lb.azurerm_lb.id
-  protocol                       = "Tcp"
-
-  depends_on = [azurerm_lb.azurerm_lb]
-}
 # lb_outbound_rule
 resource "azurerm_lb_outbound_rule" "outbound" {
   backend_address_pool_id = azurerm_lb_backend_address_pool.lb_pool.id
